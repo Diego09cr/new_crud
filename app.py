@@ -39,9 +39,9 @@ def att(id):
 def delete(id):
     if id in usuarios:
         del(usuarios[id])
-        return jsonify({"Usuário": "deleteado"})
+        return jsonify({"Usuário": "deleteado com sucesso"})
     else:
-        return jsonify({'Usuário': 'Não existe'})
+        return jsonify({'Usuário': 'Não encontrado'})
 
 
 if __name__ == '__main__':
