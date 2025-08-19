@@ -1,47 +1,51 @@
 from flask import Flask, request, jsonify
 app = Flask(__name__)
-usuarios = {}
+users = {}
 id = 1
 
-@app.route('/usuario', methods=['POST'])
+@app.route('/User', methods=['POST'])
 def cria():
     global id
     dados = request.get_json()
-    usuario = ({'id': id,
-                'nome': dados.get('nome'),
-               'idade': dados.get('idade'),
-               'email': dados.get('email')})
-    usuarios[id] = usuario
+    User = ({
+        'id': id,
+        'name': dados.get('name'),
+        'age': dados.get('age'),
+        'email': dados.get('email')
+        })
+    users[id] = User
     id += 1
-    return jsonify(usuario)
+    return jsonify(User)
 
-@app.route('/usuario/<int:id>', methods=['GET'])
+@app.route('/User/<int:id>', methods=['GET'])
 def get_id(id):
-    if id in usuarios:
-        return jsonify(usuarios[id])
+    if id in users:
+        return jsonify(users[id])
     else:
-        return jsonify({'Usuário': 'Não existe'})
+        return jsonify({'User': 'Not found'})
     
-@app.route('/usuario/<int:id>', methods=['PUT'])
+@app.route('/User/<int:id>', methods=['PUT'])
 def att(id):
-    if id in usuarios:
+    if id in users:
         dados = request.get_json()
-        usuario = ({'id': id,
-                'nome': dados.get('nome'),
-               'idade': dados.get('idade'),
-               'email': dados.get('email')})
-        usuarios[id] = usuario
-        return jsonify(usuario)
+        User = ({
+            'id': id,
+            'name': dados.get('name'),
+            'age': dados.get('age'),
+            'email': dados.get('email')
+            })
+        users[id] = User
+        return jsonify(User)
     else:
-        return jsonify({'Usuário': 'Não existe'})
+        return jsonify({'User': 'Not found'})
 
-@app.route('/usuario/<int:id>', methods=['DELETE'])
+@app.route('/User/<int:id>', methods=['DELETE'])
 def delete(id):
-    if id in usuarios:
-        del(usuarios[id])
-        return jsonify({"Usuário": "deleteado com sucesso"})
+    if id in users:
+        del(users[id])
+        return jsonify({"User": "Deleted successfully"})
     else:
-        return jsonify({'Usuário': 'Não encontrado'})
+        return jsonify({'User': 'Not found'})
 
 
 if __name__ == '__main__':
